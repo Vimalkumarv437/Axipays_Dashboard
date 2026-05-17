@@ -325,7 +325,7 @@ export const DashboardPage = () => {
         {/* Bottom Row */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
           {/* Currency Breakdown Donut */}
-          <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 lg:col-span-1 flex flex-col h-fit group hover:shadow-lg hover:-translate-y-1 transition-all duration-300 sticky top-24">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 lg:col-span-1 flex flex-col h-fit group hover:shadow-lg hover:-translate-y-1 transition-all duration-300 lg:sticky lg:top-24 lg:z-10 relative">
             <div>
               <h3 className="text-sm font-bold text-slate-800">Currency Breakdown</h3>
               <p className="text-xs text-slate-400">Volume by currency</p>
@@ -460,7 +460,13 @@ export const DashboardPage = () => {
                         <tr key={txn.orderId || txn.id || idx} className="hover:bg-slate-50/50 transition-colors group cursor-pointer">
                           <td className="p-4 text-xs font-bold text-slate-700 group-hover:text-blue-600 transition-colors">{txn.orderId || txn.id || '-'}</td>
                           <td className="p-4 text-xs font-mono text-slate-600">{maskedCard}</td>
-                          <td className="p-4 text-xs text-blue-600">{txn.email || '-'}</td>
+                          <td className="p-4 text-xs">
+                            {txn.email ? (
+                              <span className="text-blue-600">{txn.email}</span>
+                            ) : (
+                              <span className="text-slate-400 italic">No mails</span>
+                            )}
+                          </td>
                           <td className="p-4 text-xs text-slate-600 font-medium">{txn.expiryMonth ? `${txn.expiryMonth}/${txn.expiryYear?.toString().slice(-2) || ''}` : '-'}</td>
                           <td className="p-4 text-xs font-mono text-slate-400 tracking-widest">{txn.cardCVC ? '•••' : '-'}</td>
                           <td className="p-4 text-xs font-bold text-slate-500">{txn.currency || '-'}</td>
