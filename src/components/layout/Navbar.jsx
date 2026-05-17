@@ -4,7 +4,6 @@ import { ShieldCheck } from 'lucide-react';
 
 export const Navbar = () => {
   const location = useLocation();
-  const isDashboard = location.pathname.includes('dashboard');
 
   return (
     <header className="bg-white border-b border-slate-200 min-h-[64px] flex flex-wrap items-center justify-between px-4 sm:px-8 sticky top-0 z-50 py-3 md:py-0">
@@ -33,27 +32,26 @@ export const Navbar = () => {
         <div className="flex items-center bg-slate-50/80 p-1 rounded-full border border-slate-200 w-full sm:w-auto justify-center">
           <NavLink
             to="/"
+            end
             className={({ isActive }) =>
-              `px-4 sm:px-6 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 flex-1 text-center sm:flex-none ${
-                isActive && !isDashboard
-                  ? 'bg-white text-slate-800 shadow-[0_1px_3px_rgba(0,0,0,0.05)]'
-                  : 'text-slate-500 hover:text-slate-700'
-              }`
-            }
-          >
-            Checkout
-          </NavLink>
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              `px-4 sm:px-6 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 flex-1 text-center sm:flex-none ${
-                isActive || isDashboard
-                  ? 'bg-white text-slate-800 shadow-[0_1px_3px_rgba(0,0,0,0.05)]'
-                  : 'text-slate-500 hover:text-slate-700'
+              `px-4 sm:px-6 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 flex-1 text-center sm:flex-none ${isActive
+                ? 'bg-white text-slate-800 shadow-[0_1px_3px_rgba(0,0,0,0.05)]'
+                : 'text-slate-500 hover:text-slate-700'
               }`
             }
           >
             Dashboard
+          </NavLink>
+          <NavLink
+            to="/checkout"
+            className={({ isActive }) =>
+              `px-4 sm:px-6 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 flex-1 text-center sm:flex-none ${isActive
+                ? 'bg-white text-slate-800 shadow-[0_1px_3px_rgba(0,0,0,0.05)]'
+                : 'text-slate-500 hover:text-slate-700'
+              }`
+            }
+          >
+            Checkout
           </NavLink>
         </div>
       </div>

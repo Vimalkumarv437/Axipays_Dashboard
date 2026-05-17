@@ -12,8 +12,8 @@ function App() {
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<CheckoutPage />} />
-          <Route path="dashboard" element={<DashboardPage />} />
+          <Route index element={<DashboardPage />} />
+          <Route path="checkout" element={<CheckoutPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
