@@ -250,13 +250,13 @@ export const DashboardPage = () => {
               <h3 className="text-sm font-bold text-slate-800">Status Distribution</h3>
               <p className="text-xs text-slate-400">Real-time breakdown</p>
             </div>
-            <div className="flex-1 flex items-center justify-center relative min-h-[220px]">
+            <div className="flex-1 flex items-center justify-center relative min-h-[220px]" style={{ WebkitTapHighlightColor: 'transparent' }}>
               {loading ? (
                 <div className="w-40 h-40 rounded-full border-8 border-slate-100 animate-pulse"></div>
               ) : (
                 <>
                   <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
+                    <PieChart style={{ outline: 'none' }}>
                       <Pie
                         data={statusData}
                         cx="50%"
@@ -271,7 +271,7 @@ export const DashboardPage = () => {
                           <Cell key={`cell-${index}`} fill={STATUS_COLORS[entry.name]} />
                         ))}
                       </Pie>
-                      <RechartsTooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
+                      <RechartsTooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', backgroundColor: '#fff' }} itemStyle={{ color: '#334155', fontWeight: 600 }} />
                     </PieChart>
                   </ResponsiveContainer>
                   <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
@@ -298,12 +298,12 @@ export const DashboardPage = () => {
                 ))}
               </div>
             </div>
-            <div className="flex-1 min-h-[220px]">
+            <div className="flex-1 min-h-[220px]" style={{ WebkitTapHighlightColor: 'transparent' }}>
               {loading ? (
                 <div className="w-full h-full bg-slate-100 rounded-lg animate-pulse"></div>
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={volumeData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
+                  <AreaChart data={volumeData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }} style={{ outline: 'none' }}>
                     <defs>
                       <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2} />
@@ -313,7 +313,7 @@ export const DashboardPage = () => {
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                     <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10 }} dy={10} />
                     <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10 }} tickFormatter={(val) => `$${val / 1000}k`} />
-                    <RechartsTooltip />
+                    <RechartsTooltip cursor={{ fill: 'transparent', stroke: 'transparent' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', backgroundColor: '#fff' }} itemStyle={{ color: '#334155', fontWeight: 600 }} />
                     <Area type="monotone" dataKey="uv" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorUv)" />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -330,12 +330,12 @@ export const DashboardPage = () => {
               <h3 className="text-sm font-bold text-slate-800">Currency Breakdown</h3>
               <p className="text-xs text-slate-400">Volume by currency</p>
             </div>
-            <div className="w-full h-[200px] mt-4 flex items-center justify-center relative">
+            <div className="w-full h-[200px] mt-4 flex items-center justify-center relative" style={{ WebkitTapHighlightColor: 'transparent' }}>
               {loading ? (
                 <div className="w-32 h-32 rounded-full border-8 border-slate-100 animate-pulse"></div>
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
+                  <PieChart style={{ outline: 'none' }}>
                     <Pie
                       data={currencyData.length ? currencyData : [{ name: 'USD', value: 1 }]}
                       cx="50%"
@@ -350,7 +350,7 @@ export const DashboardPage = () => {
                         <Cell key={`cell-${index}`} fill={CURRENCY_COLORS[index % CURRENCY_COLORS.length]} />
                       ))}
                     </Pie>
-                    <RechartsTooltip />
+                    <RechartsTooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', backgroundColor: '#fff' }} itemStyle={{ color: '#334155', fontWeight: 600 }} />
                   </PieChart>
                 </ResponsiveContainer>
               )}
