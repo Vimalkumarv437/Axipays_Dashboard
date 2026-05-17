@@ -561,11 +561,14 @@ export const CheckoutPage = () => {
 
           </form>
         </div>
+      </div>
 
-        {/* Footer text */}
-        <div className="text-center mt-8 text-xs text-slate-500 font-medium pb-10">
-          Powered by <span className="font-bold text-[#1e3a8a]">AXIPAYS</span> • Your payment info is encrypted end-to-end.
-        </div>
+      {/* Footer text */}
+      <div className="text-center mt-6 sm:mt-8 text-xs text-slate-500 font-medium pb-8 w-full max-w-sm sm:max-w-none">
+        Powered by <span className="font-bold text-[#1e3a8a]">AXIPAYS</span>
+        <span className="hidden sm:inline"> • </span>
+        <br className="block sm:hidden my-1" />
+        <span className="inline-block mt-1 sm:mt-0">Your payment info is encrypted end-to-end.</span>
       </div>
 
       <PaymentModal

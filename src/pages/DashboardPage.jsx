@@ -18,6 +18,7 @@ export const DashboardPage = () => {
   const [statusFilter, setStatusFilter] = useState('All');
   const [totalApiCount, setTotalApiCount] = useState(0);
   const [limit, setLimit] = useState(10);
+  const isFetchingRef = React.useRef(false);
 
   const [summary, setSummary] = useState({
     totalTransactions: 0,
@@ -33,6 +34,8 @@ export const DashboardPage = () => {
   }, []);
 
   const loadData = async () => {
+    if (isFetchingRef.current) return;
+    isFetchingRef.current = true;
     setLoading(true);
     try {
       // Fetch data
@@ -46,7 +49,11 @@ export const DashboardPage = () => {
       toast.error("Failed to load dashboard data");
       console.error(error);
     } finally {
-      setLoading(false);
+      // 500ms cooldown to act as debounce/throttle
+      setTimeout(() => {
+        setLoading(false);
+        isFetchingRef.current = false;
+      }, 500);
     }
   };
 
@@ -130,7 +137,8 @@ export const DashboardPage = () => {
           </div>
           <button
             onClick={loadData}
-            className="flex items-center bg-white border border-slate-200 rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 transition-colors"
+            disabled={loading}
+            className={`flex items-center bg-white border border-slate-200 rounded-md px-3 py-1.5 text-sm font-medium shadow-sm transition-colors ${loading ? 'opacity-60 cursor-not-allowed text-slate-500' : 'text-slate-700 hover:bg-slate-50'}`}
           >
             <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin text-blue-500' : 'text-slate-500'}`} />
             Refresh
@@ -250,13 +258,13 @@ export const DashboardPage = () => {
               <h3 className="text-sm font-bold text-slate-800">Status Distribution</h3>
               <p className="text-xs text-slate-400">Real-time breakdown</p>
             </div>
-            <div className="flex-1 flex items-center justify-center relative min-h-[220px]" style={{ WebkitTapHighlightColor: 'transparent' }}>
+            <div className="flex-1 flex items-center justify-center relative min-h-[220px] outline-none focus:outline-none" style={{ WebkitTapHighlightColor: 'transparent', outline: 'none' }}>
               {loading ? (
                 <div className="w-40 h-40 rounded-full border-8 border-slate-100 animate-pulse"></div>
               ) : (
                 <>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart style={{ outline: 'none' }}>
+                  <ResponsiveContainer width="100%" height="100%" className="outline-none focus:outline-none" style={{ outline: 'none' }}>
+                    <PieChart style={{ outline: 'none' }} className="outline-none focus:outline-none">
                       <Pie
                         data={statusData}
                         cx="50%"
@@ -266,9 +274,10 @@ export const DashboardPage = () => {
                         paddingAngle={3}
                         dataKey="value"
                         stroke="none"
+                        style={{ outline: 'none' }}
                       >
                         {statusData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={STATUS_COLORS[entry.name]} />
+                          <Cell key={`cell-${index}`} fill={STATUS_COLORS[entry.name]} style={{ outline: 'none' }} />
                         ))}
                       </Pie>
                       <RechartsTooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', backgroundColor: '#fff' }} itemStyle={{ color: '#334155', fontWeight: 600 }} />
@@ -298,12 +307,12 @@ export const DashboardPage = () => {
                 ))}
               </div>
             </div>
-            <div className="flex-1 min-h-[220px]" style={{ WebkitTapHighlightColor: 'transparent' }}>
+            <div className="flex-1 min-h-[220px] outline-none focus:outline-none" style={{ WebkitTapHighlightColor: 'transparent', outline: 'none' }}>
               {loading ? (
                 <div className="w-full h-full bg-slate-100 rounded-lg animate-pulse"></div>
               ) : (
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={volumeData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }} style={{ outline: 'none' }}>
+                <ResponsiveContainer width="100%" height="100%" className="outline-none focus:outline-none" style={{ outline: 'none' }}>
+                  <AreaChart data={volumeData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }} style={{ outline: 'none' }} className="outline-none focus:outline-none">
                     <defs>
                       <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2} />
@@ -330,12 +339,12 @@ export const DashboardPage = () => {
               <h3 className="text-sm font-bold text-slate-800">Currency Breakdown</h3>
               <p className="text-xs text-slate-400">Volume by currency</p>
             </div>
-            <div className="w-full h-[200px] mt-4 flex items-center justify-center relative" style={{ WebkitTapHighlightColor: 'transparent' }}>
+            <div className="w-full h-[200px] mt-4 flex items-center justify-center relative outline-none focus:outline-none" style={{ WebkitTapHighlightColor: 'transparent', outline: 'none' }}>
               {loading ? (
                 <div className="w-32 h-32 rounded-full border-8 border-slate-100 animate-pulse"></div>
               ) : (
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart style={{ outline: 'none' }}>
+                <ResponsiveContainer width="100%" height="100%" className="outline-none focus:outline-none" style={{ outline: 'none' }}>
+                  <PieChart style={{ outline: 'none' }} className="outline-none focus:outline-none">
                     <Pie
                       data={currencyData.length ? currencyData : [{ name: 'USD', value: 1 }]}
                       cx="50%"
@@ -345,9 +354,10 @@ export const DashboardPage = () => {
                       paddingAngle={2}
                       dataKey="value"
                       stroke="none"
+                      style={{ outline: 'none' }}
                     >
                       {(currencyData.length ? currencyData : [{ name: 'USD', value: 1 }]).map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={CURRENCY_COLORS[index % CURRENCY_COLORS.length]} />
+                        <Cell key={`cell-${index}`} fill={CURRENCY_COLORS[index % CURRENCY_COLORS.length]} style={{ outline: 'none' }} />
                       ))}
                     </Pie>
                     <RechartsTooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', backgroundColor: '#fff' }} itemStyle={{ color: '#334155', fontWeight: 600 }} />
